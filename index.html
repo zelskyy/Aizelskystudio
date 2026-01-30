@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aizelsky Studio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Loading Screen -->
+    <div id="loader">
+        <div class="loader-content">
+            <img src="assets/load.png" alt="Aizelsky Logo" class="loader-logo-img">
+            <div class="loading-bar-container">
+                <div class="loading-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Intro Section (Scroll Reveal) -->
+    <section id="intro">
+        <div class="intro-content">
+            <img src="assets/load.png" alt="Aizelsky Studio" class="intro-logo">
+            <h2>Aizelsky Studio</h2>
+            <p>Crafting the future of AI Cinema.</p>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll to Explore</span>
+            <div class="line"></div>
+        </div>
+    </section>
+
+    <nav class="navbar">
+        <div class="logo">Aizelsky Studio</div>
+        <div class="nav-right">
+            <ul class="nav-links">
+                <li><a href="#showreel">Showreel</a></li>
+                <li><a href="#what-we-do">What We Do</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button id="theme-toggle" class="theme-btn" aria-label="Toggle Theme">
+                <!-- Sun Icon -->
+                <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <!-- Moon Icon -->
+                <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </button>
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Refactored Hero Section (NanoBanana Style) -->
+    <section id="showreel" class="hero">
+        <div class="slider-container">
+            <!-- Slide 1: EUNOIA -->
+            <div class="slide active">
+                <video autoplay muted loop playsinline poster="assets/hero-poster.png" class="slide-bg">
+                    <source src="assets/hero1.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <div class="slide-content">
+                    <h1>EUNOIA</h1>
+                    <p>A trailer made with AI telling the story of a human world on the brink of extinction by robots.
+                    </p>
+                </div>
+            </div>
+            <!-- Slide 2: Helianthus -->
+            <div class="slide">
+                <video autoplay muted loop playsinline poster="assets/product-1.png" class="slide-bg">
+                    <source src="assets/hero2.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <div class="slide-content">
+                    <h1>HELIANTHUS</h1>
+                    <p>A semiotic journey of breaking free from toxic bonds. The sunflower is not just a bloom, but a
+                        beautiful addiction.</p>
+                </div>
+            </div>
+            <!-- Slide 3: Kisaragi -->
+            <div class="slide">
+                <video autoplay muted loop playsinline poster="assets/hero-poster.png" class="slide-bg">
+                    <source src="assets/hero3.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <div class="slide-content">
+                    <h1>KISARAGI</h1>
+                    <p>A haunting tale of a traveler followed by a spirit from the legendary Kisaragi Station in Japan.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Arrows -->
+        <button class="nav-arrow prev" id="prevBtn">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+        </button>
+        <button class="nav-arrow next" id="nextBtn">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+        </button>
+
+        <!-- Bottom Pill Navigation -->
+        <div class="bottom-nav">
+            <button class="nav-pill active">Eunoia</button>
+            <button class="nav-pill">Helianthus</button>
+            <button class="nav-pill">Kisaragi</button>
+        </div>
+    </section>
+
+    <section id="what-we-do" class="section">
+        <div class="section-header">
+            <h2>What We Do</h2>
+            <p>Innovative tools and creative services for the modern era.</p>
+        </div>
+        <div class="product-grid" id="product-grid">
+            <!-- Products injected via JS -->
+        </div>
+    </section>
+
+
+
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="section-header">
+                <h2>Connect With Us</h2>
+            </div>
+            <div class="social-links-container">
+                <a href="https://www.instagram.com/aizelsky" target="_blank" class="social-btn instagram">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                    </svg>
+                    Instagram
+                </a>
+                <a href="https://www.youtube.com/@aizelsky/" target="_blank" class="social-btn youtube">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path
+                            d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z">
+                        </path>
+                        <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+                    </svg>
+                    YouTube
+                </a>
+                <a href="https://www.tiktok.com/@ajelsky" target="_blank" class="social-btn tiktok">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path>
+                    </svg>
+                    TikTok
+                </a>
+            </div>
+            <p class="copyright">&copy; 2026 Aizelsky Studio. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
