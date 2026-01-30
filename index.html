@@ -12,7 +12,11 @@
     <!-- Loading Screen -->
     <div id="loader">
         <div class="loader-content">
-            <img src="assets/load.png" alt="Aizelsky Logo" class="loader-logo-img">
+            <div class="spinner"></div>
+            <div class="loading-text-container">
+                <span class="initializing-text">Initializing...</span>
+                <span class="loading-percentage">0%</span>
+            </div>
             <div class="loading-bar-container">
                 <div class="loading-bar"></div>
             </div>
@@ -22,13 +26,21 @@
     <!-- Intro Section (Scroll Reveal) -->
     <section id="intro">
         <div class="intro-content">
-            <img src="assets/load.png" alt="Aizelsky Studio" class="intro-logo">
-            <h2>Aizelsky Studio</h2>
-            <p>Crafting the future of AI Cinema.</p>
-        </div>
-        <div class="scroll-indicator">
-            <span>Scroll to Explore</span>
-            <div class="line"></div>
+            <canvas id="scroll-sequence" class="intro-logo"></canvas>
+
+            <div class="text-center">
+                <h2>Aizelsky Studio</h2>
+                <p>Crafting the future of AI Cinema.</p>
+            </div>
+
+            <div class="text-corner">
+                <h2>Aizelsky Studio</h2>
+                <p>Crafting the future of AI Cinema.</p>
+            </div>
+            <div class="scroll-indicator">
+                <span>Scroll to Explore</span>
+                <div class="line"></div>
+            </div>
         </div>
     </section>
 
@@ -73,7 +85,8 @@
             <!-- Slide 1: EUNOIA -->
             <div class="slide active">
                 <video autoplay muted loop playsinline poster="assets/hero-poster.png" class="slide-bg">
-                    <source src="https://res.cloudinary.com/dfzrfs8ro/video/upload/v1769767182/hero1_pmxn1b.mp4" type="video/mp4">
+                    <source src="https://res.cloudinary.com/dfzrfs8ro/video/upload/v1769767182/hero1_pmxn1b.mp4"
+                        type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
                 <div class="slide-content">
@@ -85,7 +98,8 @@
             <!-- Slide 2: Helianthus -->
             <div class="slide">
                 <video autoplay muted loop playsinline poster="assets/product-1.png" class="slide-bg">
-                    <source src="https://res.cloudinary.com/dfzrfs8ro/video/upload/v1769767195/hero2_ogztc3.mp4" type="video/mp4">
+                    <source src="https://res.cloudinary.com/dfzrfs8ro/video/upload/v1769767195/hero2_ogztc3.mp4"
+                        type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
                 <div class="slide-content">
@@ -97,7 +111,8 @@
             <!-- Slide 3: Kisaragi -->
             <div class="slide">
                 <video autoplay muted loop playsinline poster="assets/hero-poster.png" class="slide-bg">
-                    <source src="https://res.cloudinary.com/dfzrfs8ro/video/upload/v1769767179/hero3_zofook.mp4" type="video/mp4">
+                    <source src="https://res.cloudinary.com/dfzrfs8ro/video/upload/v1769767179/hero3_zofook.mp4"
+                        type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
                 <div class="slide-content">

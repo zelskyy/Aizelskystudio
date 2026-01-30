@@ -161,47 +161,57 @@ body.light-mode .moon-icon {
     gap: 20px;
 }
 
-.loader-logo-img {
-    width: 250px;
-    height: auto;
-    filter: invert(1);
-    mix-blend-mode: screen;
-    opacity: 0;
-    /* First fade in, then flicker continuously */
-    animation: fadeInUp 0.5s ease-out forwards, flickerGlow 3s infinite alternate;
+/* Loader Spinner */
+.spinner {
+    width: 60px;
+    height: 60px;
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    border-top: 3px solid #fff;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    animation: spinCircle 1s linear infinite;
 }
 
-@keyframes flickerGlow {
+@keyframes spinCircle {
+    0% {
+        transform: rotate(0deg);
+    }
 
-    0%,
-    19%,
-    21%,
-    23%,
-    25%,
-    54%,
-    56%,
     100% {
-        opacity: 1;
-        filter: invert(1) drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
+        transform: rotate(360deg);
     }
+}
 
-    20%,
-    24%,
-    55% {
-        opacity: 0.4;
-        filter: invert(1) drop-shadow(0 0 2px rgba(255, 255, 255, 0.2));
-    }
+.loading-text-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 250px;
+    margin-bottom: 10px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.initializing-text {
+    font-size: 14px;
+    color: #fff;
+    /* text-transform: uppercase; Removed for artistic look */
+    letter-spacing: 2px;
+}
+
+.loading-percentage {
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
 }
 
 .loading-bar-container {
-    width: 200px;
-    height: 4px;
+    width: 250px;
+    /* Match text container width */
+    height: 2px;
     background: rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
+    border-radius: 2px;
     overflow: hidden;
-    margin-top: 25px;
-    opacity: 0;
-    animation: fadeIn 0.5s ease-out 0.3s forwards;
+    /* Removed animation delay for immediate start */
 }
 
 .loading-bar {
@@ -243,35 +253,39 @@ body.light-mode .moon-icon {
 /* Intro Section */
 #intro {
     position: relative;
-    /* Will be manipulated via JS for sticky/fixed effect or simply placed before */
-    height: 100vh;
+    height: 400vh;
+    /* 4x viewport height for scroll track */
     width: 100%;
     background: var(--bg-color);
+    z-index: 500;
+}
+
+.intro-content {
+    position: sticky;
+    top: 0;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    z-index: 500;
-    overflow: hidden;
-    transition: background-color 0.3s ease;
-}
-
-.intro-content {
     text-align: center;
-    opacity: 0;
-    /* Animate in after loader */
-    transform: translateY(30px);
-    transition: all 1s ease-out;
+    overflow: hidden;
+    /* Transition for fade out at the end */
+    transition: opacity 0.5s ease-out;
 }
 
 .intro-logo {
-    width: 350px;
-    /* Bigger size as requested */
+    /* Canvas specific styles */
+    /* Width/Height controls the display size, JS controls resolution */
+    width: 100%;
+    max-width: 500px;
+    /* Limit max size */
     height: auto;
     margin-bottom: 2rem;
     filter: invert(1);
     mix-blend-mode: screen;
     transition: filter 0.3s, mix-blend-mode 0.3s;
+    object-fit: contain;
 }
 
 /* Light Mode Overrides for Intro */
@@ -281,18 +295,20 @@ body.light-mode .intro-logo {
 }
 
 #intro h2 {
-    font-size: 4rem;
+    font-size: 3rem;
     font-weight: 700;
     letter-spacing: -0.05em;
-    margin-bottom: 1rem;
-    background: linear-gradient(180deg, #fff, #888);
+    margin-bottom: 0.5rem;
+    background: linear-gradient(to right, #fff, #aaa);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 body.light-mode #intro h2 {
     background: linear-gradient(180deg, #000, #666);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -307,9 +323,50 @@ body.light-mode #intro p {
     color: #555;
 }
 
+/* Center Text (Default) */
+.text-center {
+    position: relative;
+    z-index: 2;
+    transition: opacity 0.1s ease-out;
+}
+
+/* Corner Text (Hidden initially) */
+.text-corner {
+    position: absolute;
+    bottom: 25%;
+    /* Adjusted to be visible above bottom edge */
+    left: 10%;
+    text-align: left;
+    opacity: 0;
+    z-index: 2;
+    transition: opacity 0.1s ease-out;
+    pointer-events: none;
+    /* Prevent blocking interaction */
+}
+
+.text-corner h2 {
+    font-size: 2rem !important;
+    /* Smaller size */
+    margin-bottom: 0.2rem !important;
+    background: linear-gradient(180deg, #fff, #888);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.text-corner p {
+    font-size: 0.9rem !important;
+    /* Smaller size */
+    letter-spacing: 0.1em !important;
+    text-transform: uppercase;
+    color: #888;
+}
+
 .scroll-indicator {
     position: absolute;
     bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     flex-direction: column;
     align-items: center;
