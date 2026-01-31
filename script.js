@@ -65,6 +65,184 @@ window.addEventListener('load', () => {
 
 // Parallax / Scroll Effect for Intro
 // Parallax / Scroll Effect for Intro
+// Initialize GSAP & ScrollTrigger
+document.addEventListener("DOMContentLoaded", (event) => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    // --- 2. Text Animations (GSAP) ---
+
+    // A. Intro Text (Fade Out on Scroll)
+    // Removed .text-corner target
+    gsap.to('.intro-content .text-center', {
+        scrollTrigger: {
+            trigger: '#intro',
+            start: "top top",
+            end: "+=20%",
+            scrub: true
+        },
+        opacity: 0,
+        y: -100, // Move up
+        filter: "blur(20px)" // Strong blur
+    });
+
+    // B. "Our Work" Masked Reveal (Staggered Words)
+    // 1. Force initial state to hidden
+    gsap.set(".word-reveal", { y: "110%" });
+
+    ScrollTrigger.create({
+        trigger: "#our-work",
+        start: "top center",
+        end: "+=500",
+        pin: true,
+        scrub: 1,
+        // Animate "OUR" then "WORK"
+        animation: gsap.to('.word-reveal', {
+            y: "0%",
+            duration: 2,
+            stagger: 0.5, // 0.5s Delay between words
+            ease: "power3.out"
+        })
+    });
+
+    // C. "What We Do" 3D Flip Stagger + Pin + Cards Sequence
+    const wwdText = new SplitType('#what-we-do h2', { types: 'chars' });
+    const productGrid = document.querySelector('#product-grid');
+
+    // SETUP: Force Initial State of Cards (Blur, Offsets)
+    // This replaces the 'from' part of fromTo, ensuring they wait in the dark.
+    if (productGrid) {
+        gsap.set(".product-card:nth-child(1)", {
+            x: -200, y: 50, rotationY: -25, autoAlpha: 0, filter: "blur(20px)"
+        });
+        gsap.set(".product-card:nth-child(2)", {
+            x: 200, y: 50, rotationY: 25, autoAlpha: 0, filter: "blur(20px)"
+        });
+    }
+
+    // Create a timeline that pins the section and plays the sequence
+    const wwdTl = gsap.timeline({
+        scrollTrigger: {
+            trigger: "#what-we-do",
+            start: "top top",
+            end: "+=250%", // Increased pin duration for longer sequential animation
+            pin: true,
+            scrub: 1
+        }
+    });
+
+    // 1. Text Animation (Header)
+    wwdTl.from(wwdText.chars, {
+        rotateX: -90,
+        opacity: 0,
+        y: 50,
+        stagger: 0.1,
+        transformOrigin: "bottom center",
+        ease: "back.out(1.7)",
+        duration: 2
+    })
+        // 2. Tagline Animation
+        .to(".wwd-header p", {
+            opacity: 1,
+            y: 0,
+            duration: 1.5,
+            ease: "power2.out"
+        }) // No overlap, waits for text
+
+        // 3. Card 1 (Azel CS) - Slide from LEFT
+        .to(".product-card:nth-child(1)", {
+            x: 0,
+            y: 0,
+            rotationY: 0,
+            autoAlpha: 1, // Force Visible
+            filter: "blur(0px)",
+            duration: 2,
+            ease: "power3.out"
+        })
+
+        // 4. Card 2 (AI Video) - Slide from RIGHT
+        .to(".product-card:nth-child(2)", {
+            x: 0,
+            y: 0,
+            rotationY: 0,
+            autoAlpha: 1, // Force Visible
+            filter: "blur(0px)",
+            duration: 2,
+            ease: "power3.out"
+        });
+
+    // D. "Upcoming" Animations
+    // 1. Header Animation (Smoother)
+    gsap.from(".upcoming-header h2", {
+        scrollTrigger: {
+            trigger: "#upcoming",
+            start: "top 80%",
+            end: "top 50%",
+            scrub: 1
+        },
+        x: -50,
+        opacity: 0,
+        filter: "blur(10px)",
+        ease: "power2.out"
+    });
+
+    // 2. Items Parallax
+    const upcomingItems = gsap.utils.toArray('.upcoming-item');
+    upcomingItems.forEach((item, i) => {
+        gsap.to(item, {
+            scrollTrigger: {
+                trigger: item,
+                start: "top 90%",
+                end: "top 60%",
+                scrub: 1
+            },
+            opacity: 1,
+            y: 0,
+            ease: "power2.out"
+        });
+    });
+
+    // E. "Connect" Strict Sequence (Text FIRST -> Then Socials)
+    const connectText = document.querySelector('#contact h2');
+    const socialContainer = document.querySelector('.social-links-container');
+    const socialBtns = document.querySelectorAll('.social-btn');
+
+    // Ensure initial state
+    if (socialContainer) gsap.set(socialContainer, { opacity: 0, y: 30 });
+    if (socialBtns.length > 0) gsap.set(socialBtns, { opacity: 0, y: 20 });
+
+    if (connectText && socialContainer) {
+        const connectTl = gsap.timeline({
+            scrollTrigger: {
+                trigger: "#contact",
+                start: "top 80%", // Start earlier
+                end: "bottom bottom",
+                toggleActions: "play none none reverse" // Play once on enter
+            }
+        });
+
+        // Step 1: Animate Text
+        connectTl.fromTo(connectText,
+            { letterSpacing: "-0.1em", opacity: 0, filter: "blur(10px)" },
+            { letterSpacing: "0.2em", opacity: 1, filter: "blur(0px)", duration: 1.0, ease: "power2.out" }
+        )
+
+            // Step 2: Animate Socials
+            .to(socialContainer, { opacity: 1, y: 0, duration: 0.1 }, "+=0.1")
+            .to(socialBtns, {
+                opacity: 1,
+                y: 0,
+                stagger: 0.1,
+                duration: 0.5,
+                ease: "back.out(1.7)"
+            });
+    }
+
+});
+
+// Center -> Corner transition logic (Hybrid Approach)
+// We can keep the simpler opacity fade for the whole container 
+// OR integrate it into GSAP. For now, let's keep the vanilla logic 
+// to avoid conflict, but ensure it targets the GSAP wrapper correctly.
 window.addEventListener('scroll', () => {
     const scrollY = window.scrollY;
     const windowHeight = window.innerHeight;
@@ -171,28 +349,6 @@ preloadImages();
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- Theme Toggle Logic ---
-    const themeBtn = document.getElementById('theme-toggle');
-    const body = document.body;
-
-    // Check saved theme
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'light') {
-        body.classList.add('light-mode');
-    }
-
-    themeBtn.addEventListener('click', () => {
-        body.classList.toggle('light-mode');
-
-        // Save preference
-        if (body.classList.contains('light-mode')) {
-            localStorage.setItem('theme', 'light');
-        } else {
-            localStorage.setItem('theme', 'dark');
-        }
-    });
-
-
     // --- NanoBanana Style Slider Logic ---
     const slides = document.querySelectorAll('.slide');
     const pills = document.querySelectorAll('.nav-pill');
@@ -229,41 +385,43 @@ document.addEventListener('DOMContentLoaded', () => {
     const products = [
         {
             title: "Azel Cinematic Suite",
-            description: "Advanced AI Prompt Builder. Generate stunning images and videos directly from your browser.",
-            image: "assets/azel-suite-thumbnail.png",
-            link: "https://azel-ai-pi.vercel.app/",
-            ctaText: "Go to App"
+            desc: "Complete post-production toolkit for filmmakers.",
+            image: "assets/product-1.png",
+            tags: ["LUTs", "Presets", "Overlays"]
         },
         {
-            title: "AI Video Services",
-            description: "Professional AI video production for trailers, ads, and creative projects. Tailored to your vision.",
-            image: "assets/ai-video-service-thumbnail.png",
-            link: "#contact",
-            ctaText: "Contact Us"
+            title: "AI Video Service",
+            desc: "Custom generative video solutions for brands.",
+            image: "assets/product-2.png",
+            tags: ["Generative AI", "Consulting"]
         }
     ];
 
     const productGrid = document.getElementById('product-grid');
-
-    function renderCards(data, container) {
-        if (!container) return;
-        data.forEach(item => {
+    if (productGrid) {
+        products.forEach(product => {
             const card = document.createElement('div');
-            card.className = 'card';
+            card.className = 'product-card';
+            // Force hidden inline to prevent FOUC (Flash of Unstyled Content)
+            card.style.opacity = '0';
+            card.style.visibility = 'hidden';
 
             card.innerHTML = `
-                <div class="card-image" style="background-image: url('${item.image}')"></div>
+                <div class="card-image">
+                    <img src="${product.image}" alt="${product.title}">
+                </div>
                 <div class="card-content">
-                    <h3>${item.title}</h3>
-                    <p>${item.description}</p>
-                    <a href="${item.link}" class="card-link">${item.ctaText || 'Learn more'} &rarr;</a>
+                    <h3>${product.title}</h3>
+                    <p>${product.desc}</p>
+                    <div class="tags">
+                        ${product.tags.map(tag => `<span>${tag}</span>`).join('')}
+                    </div>
+                    <button class="btn-learn">Learn More</button>
                 </div>
             `;
-            container.appendChild(card);
+            productGrid.appendChild(card);
         });
     }
-
-    renderCards(products, productGrid);
 
     // Navbar Scroll Effect
     const navbar = document.querySelector('.navbar');

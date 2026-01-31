@@ -1,26 +1,21 @@
 :root {
-    /* Dark Mode Defaults */
-    --bg-color: #000000;
-    --text-color: #f5f5f7;
-    --text-secondary: #86868b;
-    --accent-color: #2997ff;
-    --card-bg: rgba(28, 28, 30, 0.6);
+    /* Minimalist / Liquid Theme Palette */
+    --bg-color: #050505;
+    /* Deep Black */
+    --text-color: #f0f0f0;
+    /* Off-white */
+    --text-secondary: #888;
+    --accent-color: #ffffff;
+    --card-bg: rgba(20, 20, 20, 0.8);
     --glass-border: rgba(255, 255, 255, 0.1);
-    --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    --nav-bg: rgba(0, 0, 0, 0.8);
-    --hero-overlay: brightness(0.6);
-    --transition-speed: 0.4s;
-}
+    --nav-bg: rgba(5, 5, 5, 0.8);
 
-body.light-mode {
-    --bg-color: #ffffff;
-    --text-color: #1d1d1f;
-    --text-secondary: #86868b;
-    --accent-color: #0071e3;
-    --card-bg: rgba(255, 255, 255, 0.8);
-    --glass-border: rgba(0, 0, 0, 0.1);
-    --nav-bg: rgba(255, 255, 255, 0.8);
-    --hero-overlay: brightness(0.9);
+    /* Typography */
+    --font-heading: 'Inter', sans-serif;
+    /* Blocky iOS Style */
+    --font-body: 'Inter', sans-serif;
+
+    --transition-speed: 0.4s;
 }
 
 * {
@@ -30,12 +25,24 @@ body.light-mode {
 }
 
 body {
+    font-family: var(--font-body);
     background-color: var(--bg-color);
     color: var(--text-color);
-    font-family: var(--font-main);
-    line-height: 1.5;
+    height: 100vh;
     overflow-x: hidden;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    /* transition: background-color 0.3s, color 0.3s; Removed for simpler liquid feel */
+}
+
+/* --- Light Mode Variables --- */
+body.light-mode {
+    --bg-color: #ffffff;
+    --text-color: #111111;
+    --text-secondary: #555555;
+    --accent-color: #000000;
+    --card-bg: rgba(0, 0, 0, 0.03);
+    /* Subtle dark glass on white */
+    --glass-border: rgba(0, 0, 0, 0.1);
+    --nav-bg: rgba(255, 255, 255, 0.8);
 }
 
 /* Typography */
@@ -87,10 +94,43 @@ a {
     letter-spacing: -0.5px;
 }
 
-.nav-right {
-    display: flex;
-    align-items: center;
-    gap: 30px;
+/* Ensure sections use the variable background */
+section {
+    background-color: var(--bg-color);
+    /* Critical for Theme Toggle */
+    transition: background-color 0.4s ease;
+}
+
+#intro,
+#what-we-do,
+#upcoming,
+#contact,
+#footer {
+    background-color: var(--bg-color) !important;
+    /* Force override manual colors */
+}
+
+/* Fix Toggle Button Visibility */
+#theme-toggle {
+    cursor: pointer;
+    padding: 10px;
+    z-index: 2000;
+    /* Ensure above everything */
+    position: relative;
+    border-radius: 50%;
+    transition: background 0.3s;
+}
+
+#theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+body.light-mode #theme-toggle {
+    color: #000;
+}
+
+body.light-mode #theme-toggle:hover {
+    background: rgba(0, 0, 0, 0.1);
 }
 
 .nav-links {
@@ -295,14 +335,17 @@ body.light-mode .intro-logo {
 }
 
 #intro h2 {
-    font-size: 3rem;
-    font-weight: 700;
+    font-family: var(--font-heading);
+    font-size: 6rem;
+    /* Massive Scale */
+    font-weight: 900;
+    /* Extra Black */
+    text-transform: uppercase;
     letter-spacing: -0.05em;
-    margin-bottom: 0.5rem;
-    background: linear-gradient(to right, #fff, #aaa);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    /* Tight tracking for blocky look */
+    line-height: 0.9;
+    margin-bottom: 1rem;
+    color: #fff;
 }
 
 body.light-mode #intro h2 {
@@ -330,37 +373,8 @@ body.light-mode #intro p {
     transition: opacity 0.1s ease-out;
 }
 
-/* Corner Text (Hidden initially) */
-.text-corner {
-    position: absolute;
-    bottom: 25%;
-    /* Adjusted to be visible above bottom edge */
-    left: 10%;
-    text-align: left;
-    opacity: 0;
-    z-index: 2;
-    transition: opacity 0.1s ease-out;
-    pointer-events: none;
-    /* Prevent blocking interaction */
-}
-
-.text-corner h2 {
-    font-size: 2rem !important;
-    /* Smaller size */
-    margin-bottom: 0.2rem !important;
-    background: linear-gradient(180deg, #fff, #888);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.text-corner p {
-    font-size: 0.9rem !important;
-    /* Smaller size */
-    letter-spacing: 0.1em !important;
-    text-transform: uppercase;
-    color: #888;
-}
+/* Corner Text Removed */
+/* .text-corner styles deleted */
 
 .scroll-indicator {
     position: absolute;
@@ -718,6 +732,251 @@ footer {
     color: var(--text-secondary);
 }
 
+/* Our Work Section (Masked Reveal) */
+#our-work {
+    height: 30vh;
+    /* Divider height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #050505;
+    overflow: hidden;
+}
+
+/* Masking for Our Work text */
+.masked-header {
+    overflow: hidden;
+    /* The mask */
+    line-height: 1.1;
+}
+
+.masked-header h2 {
+    display: none;
+    /* Replaced by spans */
+}
+
+.masked-header .word-reveal {
+    font-family: var(--font-heading);
+    font-size: 8rem;
+    /* Huge */
+    text-transform: uppercase;
+    color: #fff;
+    line-height: 1;
+}
+
+/* What We Do Section */
+#what-we-do {
+    padding: 100px 5%;
+    background: #050505;
+}
+
+#product-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+    margin-top: 60px;
+    perspective: 1000px;
+}
+
+.product-card {
+    background: rgba(255, 255, 255, 0.03);
+    /* Deep Glass */
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    overflow: hidden;
+    opacity: 0;
+    /* Hidden initially for GSAP */
+    transform: translateY(30px);
+    /* Slight offset */
+    transition: transform 0.4s ease, border-color 0.4s ease;
+}
+
+.product-card:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-5px);
+    /* Lift on hover */
+}
+
+.card-image {
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.product-card:hover .card-image img {
+    transform: scale(1.05);
+}
+
+.card-content {
+    padding: 30px;
+}
+
+.card-content h3 {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.card-content p {
+    font-size: 1rem;
+    color: #ccc;
+    /* Lighter for better readability */
+    margin-bottom: 25px;
+    line-height: 1.6;
+}
+
+.card-link {
+    display: inline-block;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    border-bottom: 1px solid #fff;
+    padding-bottom: 2px;
+    transition: all 0.3s ease;
+}
+
+.card-link:hover {
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+    transform: translateX(5px);
+}
+
+.wwd-header h2 {
+    font-family: var(--font-heading);
+    font-size: 5rem;
+    text-transform: uppercase;
+    color: transparent;
+    -webkit-text-stroke: 2px #fff;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+.wwd-header p {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    opacity: 0;
+    /* Hidden for sequencing */
+    transform: translateY(20px);
+}
+
+/* Connect / Contact Section */
+#contact {
+    padding: 100px 5%;
+    text-align: center;
+}
+
+.connect-header h2 {
+    font-family: var(--font-heading);
+    font-size: 5rem;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+/* Upcoming Work Extended */
+#upcoming {
+    padding: 100px 5%;
+    background: #080808;
+    background-image: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 30px 30px;
+    /* Dot pattern */
+}
+
+.upcoming-header h2 {
+    font-family: var(--font-heading);
+    font-size: 8rem;
+    /* Massive Scale */
+    text-transform: uppercase;
+    color: #fff;
+    margin-bottom: 20px;
+    line-height: 0.9;
+}
+
+.upcoming-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 80px;
+    gap: 50px;
+    opacity: 0;
+    /* Hidden init */
+    transform: translateY(50px);
+}
+
+.upcoming-item.project-right {
+    flex-direction: row-reverse;
+}
+
+.upcoming-image {
+    flex: 1;
+    height: 300px;
+    overflow: hidden;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.upcoming-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.upcoming-image:hover img {
+    transform: scale(1.05);
+}
+
+.upcoming-text {
+    flex: 1;
+}
+
+.upcoming-text h3 {
+    font-size: 3rem;
+    font-family: var(--font-heading);
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.badgeq {
+    display: inline-block;
+    padding: 5px 10px;
+    border: 1px solid #fff;
+    font-size: 0.8rem;
+    margin-top: 15px;
+    letter-spacing: 0.1em;
+}
+
+/* Our Work Reveal */
+.word-reveal {
+    display: inline-block;
+    transform: translateY(110%);
+    /* Hidden below mask */
+    padding: 0 10px;
+}
+
+/* Social Sequence */
+.social-links-container {
+    opacity: 0;
+    /* Hidden initially for sequence */
+    transform: translateY(30px);
+}
+
+.social-btn.email {
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.social-btn.email:hover {
+    background: #fff;
+    color: #000;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     h1 {
@@ -753,5 +1012,80 @@ footer {
     .nav-pill {
         padding: 8px 16px;
         font-size: 0.8rem;
+    }
+
+    /* --- Mobile Refinements --- */
+
+    /* Global Section Spacing */
+    section {
+        padding: 60px 20px !important;
+        /* Tighter padding for mobile */
+    }
+
+    /* Header scaling */
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    h2 {
+        font-size: 2.5rem !important;
+    }
+
+    .intro-content h1 {
+        font-size: 3rem;
+    }
+
+    /* What We Do: Stack Cards */
+    #product-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        margin-top: 40px;
+    }
+
+    .wwd-header h2 {
+        font-size: 3rem !important;
+        /* Readable but big */
+        -webkit-text-stroke: 1px #fff;
+        /* Thinner stroke for mobile */
+    }
+
+    /* Upcoming: Stack Projects */
+    .upcoming-item {
+        flex-direction: column !important;
+        gap: 20px;
+        margin-top: 50px;
+        text-align: center;
+    }
+
+    /* Reset reverse row for mobile */
+    .upcoming-item.project-right {
+        flex-direction: column !important;
+    }
+
+    .upcoming-image {
+        width: 100%;
+        height: 250px;
+        /* Slightly shorter for mobile context */
+    }
+
+    .upcoming-header h2 {
+        font-size: 3.5rem !important;
+        line-height: 1;
+    }
+
+    /* Connect: Adjustments */
+    .connect-header h2 {
+        font-size: 3rem !important;
+    }
+
+    .social-links-container {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .social-btn {
+        width: 100%;
+        /* Full width buttons */
+        justify-content: center;
     }
 }
